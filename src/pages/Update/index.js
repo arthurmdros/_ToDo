@@ -9,8 +9,7 @@ import Input from '../components/Input';
 import logoImg from '../../assets/logo.png';
 import styles from './styles';
 
-export default function Create() {
- 
+export default function Update(item) {  
   const formRef = useRef(null);
   const navigation = useNavigation();
 
@@ -25,12 +24,12 @@ export default function Create() {
   async function handleSubmit(data) {
     try{
 
-      await api.post('create', data);
-      alert('Salvo com sucesso!');
+      await api.put(`update/${item.route.params}`, data);
+      alert('Alterado com sucesso!');
       navigateToHome();
 
     }catch(err){
-      alert('Erro ao cadastrar, tente novamente');
+      alert('Erro ao alterar, tente novamente');
     }        
   }
 
@@ -45,7 +44,7 @@ export default function Create() {
       </View>
 
       <View style={styles.headerTitle}>
-        <Text style={styles.title}>Cadastrar Lembrete</Text>
+        <Text style={styles.title}>Atualizar Lembrete</Text>
         <Text style={styles.description}>
             Insira as informações abaixo:
         </Text>        
@@ -53,10 +52,10 @@ export default function Create() {
       
       <View style={styles.newContainer}>
           <Form ref={formRef} onSubmit={handleSubmit}>
-          <Text style={styles.newText}>Título:</Text>
+          <Text style={styles.newText}>Novo título:</Text>
           <Input style={styles.newTitle} name="title" type="title" />
           
-          <Text style={styles.newText}>Descrição:</Text>
+          <Text style={styles.newText}>Nova descrição:</Text>
           <Input style={styles.newDescription} name="description" type="description" />
 
         <View style={styles.actions}>
