@@ -14,7 +14,7 @@ export default function Update(item) {
   const navigation = useNavigation();
 
   function helpAlert(){
-    alert('Aplicação para cadastrar lista de afazeres.');
+    alert('Página para atualizar uma tarefa.');
   }
 
   function navigateToHome(){

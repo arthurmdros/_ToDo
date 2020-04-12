@@ -15,6 +15,13 @@ export default StyleSheet.create({
       paddingHorizontal: 24,
     },
 
+    actionsHeader:{
+      marginTop: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',      
+    },
+
     headerTitle:{
       paddingHorizontal: 24,
     },
@@ -66,7 +73,7 @@ export default StyleSheet.create({
       color: '#000000',
     },
 
-    actions:{
+    actions:{      
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',      
@@ -92,7 +99,18 @@ export default StyleSheet.create({
       alignItems: 'center',
     },
 
+    updateButton: {
+      flexDirection: 'row',            
+      alignItems: 'center',
+    },
+
     createButtonText: {
+      color: '#000000',
+      fontSize: 15,
+      fontWeight: 'bold',
+    },
+    
+    updateButtonText: {
       color: '#000000',
       fontSize: 15,
       fontWeight: 'bold',

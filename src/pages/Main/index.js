@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Feather, AntDesign } from '@expo/vector-icons';
+import { Feather, AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { FlatList, Image, Text, View, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -18,11 +18,15 @@ export default function Main() {
 
   const navigation = useNavigation();
 
-  function navigateCreate(){    
+  function navigateCreate(){ 
+    setItens([]);
+    setPage(1);   
     navigation.navigate('Create');
   }
 
   function navigateUpdate(item){    
+    setItens([]);
+    setPage(1);
     navigation.navigate('Update', item.id);
   }
 
@@ -30,7 +34,7 @@ export default function Main() {
     alert('Aplicação para cadastrar lista de afazeres.');
   }
 
-  async function loadItens(){     
+  async function loadItens(){       
     if (loading){
       return;
     }
@@ -43,6 +47,7 @@ export default function Main() {
     const response = await api.get('index', {
       params: { page }
     });   
+    console.log(page);
     setItens([...itens, ...response.data]);    
     setTotal(response.headers['total-count']);             
     setPage(page + 1);
@@ -54,6 +59,8 @@ export default function Main() {
   }, [])
 
   async function deleteToDo(id){
+    setItens([]);
+    setPage(1);
     try{
       await api.delete(`delete/${id}`);
 
@@ -80,10 +87,15 @@ export default function Main() {
             <Text style={styles.total}> {total} </Text>afazeres cadastrados.
         </Text>
         
-        <View style={styles.createItem}>          
+        <View style={styles.actionsHeader}>          
           <TouchableOpacity style={styles.createButton} onPress={() => navigateCreate(itens)}>
               <Text style={styles.createButtonText}>Cadastrar afazeres </Text>
               <Feather name='plus-circle' size={20} color={'#000000'}/>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.updateButton} onPress={() => loadItens()}>
+              <Text style={styles.updateButtonText}>Atualizar </Text>
+              <MaterialIcons name='update' size={20} color={'#000000'}/>
           </TouchableOpacity>
         </View>
 
@@ -93,8 +105,7 @@ export default function Main() {
           data = {itens}
           style = {styles.toDoList}
           keyExtractor = {item => String(item.id)}
-          showsVerticalScrollIndicator={false}
-          onEndReached={loadItens}
+          showsVerticalScrollIndicator={false}          
           onEndReachedThreshold={0.2}
           renderItem={({ item: item }) => (
           <View style={styles.item}>
