@@ -10,24 +10,20 @@ import logoImg from '../../assets/logo.png';
 import styles from './styles';
 
 
-export default function Main() {
+export default function Main({navigation}) {
   const [itens, setItens] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const navigation = useNavigation();
+  const nav = useNavigation();
 
   function navigateCreate(){ 
-    setItens([]);
-    setPage(1);   
-    navigation.navigate('Create');
+    nav.navigate('Create');
   }
 
-  function navigateUpdate(item){    
-    setItens([]);
-    setPage(1);
-    navigation.navigate('Update', item.id);
+  function navigateUpdate(item){        
+    nav.navigate('Update', item.id);
   }
 
   function helpAlert(){
@@ -47,7 +43,7 @@ export default function Main() {
     const response = await api.get('index', {
       params: { page }
     });   
-    console.log(page);
+    
     setItens([...itens, ...response.data]);    
     setTotal(response.headers['total-count']);             
     setPage(page + 1);
@@ -55,12 +51,15 @@ export default function Main() {
   }
 
   useEffect(() => {
-    loadItens();
-  }, [])
+    const unsubscribe = navigation.addListener('focus', () =>{
+        loadItens();
+    });    
 
-  async function deleteToDo(id){
-    setItens([]);
-    setPage(1);
+    return unsubscribe;
+    
+  }, [navigation]);
+
+  async function deleteToDo(id){    
     try{
       await api.delete(`delete/${id}`);
 
@@ -92,11 +91,6 @@ export default function Main() {
               <Text style={styles.createButtonText}>Cadastrar afazeres </Text>
               <Feather name='plus-circle' size={20} color={'#000000'}/>
           </TouchableOpacity>
-
-          <TouchableOpacity style={styles.updateButton} onPress={() => loadItens()}>
-              <Text style={styles.updateButtonText}>Atualizar </Text>
-              <MaterialIcons name='update' size={20} color={'#000000'}/>
-          </TouchableOpacity>
         </View>
 
       </View>
@@ -106,7 +100,8 @@ export default function Main() {
           style = {styles.toDoList}
           keyExtractor = {item => String(item.id)}
           showsVerticalScrollIndicator={false}          
-          onEndReachedThreshold={0.2}
+          onEndReached={loadItens}
+          onEndReachedThreshold={0.2}          
           renderItem={({ item: item }) => (
           <View style={styles.item}>
               <Text style={styles.itemProperty}>Tarefa:</Text>
