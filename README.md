@@ -14,21 +14,21 @@ essênciais como Cadastrar, Alterar e Excluir.
   
 ## Tela Inicial
 
-![Página Inicial][logo]
-
-[logo]: https://github.com/arthurmdros/_ToDo/blob/master/index.png "Index"
+<p align="center">
+  <img src="https://github.com/arthurmdros/_ToDo/blob/master/index.png">
+</p>
 
 ## Tela de Cadastros
 
-![Cadastros][logo1]
-
-[logo1]: https://github.com/arthurmdros/_ToDo/blob/master/create.png "Create"
+<p align="center">
+  <img src="https://github.com/arthurmdros/_ToDo/blob/master/create.png">
+</p>
 
 ## Tela de Alteração 
 
-![Alteração][logo2]
-
-[logo2]: https://github.com/arthurmdros/_ToDo/blob/master/update.png "Update"
+<p align="center">
+  <img src="https://github.com/arthurmdros/_ToDo/blob/master/update.png">
+</p>
 
 ## Execução
   
